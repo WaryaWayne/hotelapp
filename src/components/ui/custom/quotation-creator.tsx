@@ -10,10 +10,8 @@ import { ArrowLeft, Plus, Trash2, Download, RefreshCw, GripVertical } from "luci
 import SignatureCanvas from "@/components/ui/custom/signature-canvas"
 import LogoUpload from "@/components/ui/custom/logo-upload"
 import { DragDropContext, Droppable, Draggable, type DropResult } from "react-beautiful-dnd"
+import { useNavigate } from "@tanstack/react-router"
 
-interface QuotationCreatorProps {
-  onBack: () => void
-}
 
 interface QuotationItem {
   id: string
@@ -25,7 +23,7 @@ interface QuotationItem {
   days: number // New field for number of days/frequency
 }
 
-export default function QuotationCreator({ onBack }: QuotationCreatorProps) {
+export default function QuotationCreator() {
   const [template, setTemplate] = useState("professional")
   const [referenceNumber, setReferenceNumber] = useState(generateReferenceNumber())
   const [clientInfo, setClientInfo] = useState({
@@ -52,6 +50,7 @@ export default function QuotationCreator({ onBack }: QuotationCreatorProps) {
     secondaryColor: "#666666",
   })
   const [additionalNotes, setAdditionalNotes] = useState("")
+  const navigate = useNavigate()
 
   function generateReferenceNumber(): string {
     return "QT" + Math.floor(100000 + Math.random() * 900000).toString()
@@ -190,6 +189,10 @@ export default function QuotationCreator({ onBack }: QuotationCreatorProps) {
     { id: "14", name: "14" },
     { id: "16", name: "16" },
   ]
+
+  const onBack = () => {
+    navigate({to: "/dashboard"})
+  }
 
   return (
     <div className="space-y-6">

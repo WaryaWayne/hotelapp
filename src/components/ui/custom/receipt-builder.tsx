@@ -10,12 +10,10 @@ import { ArrowLeft, Download, RefreshCw, FileText, Plus } from "lucide-react"
 import SignatureCanvas from "@/components/ui/custom/signature-canvas"
 import LogoUpload from "@/components/ui/custom/logo-upload"
 import { generateSecurePDF } from "@/components/ui/custom/pdf-generator"
+import { useNavigate } from "@tanstack/react-router"
 
-interface ReceiptBuilderProps {
-  onBack: () => void
-}
 
-export default function ReceiptBuilder({ onBack }: ReceiptBuilderProps) {
+export default function ReceiptBuilder() {
   const [receiptMode, setReceiptMode] = useState<"new" | "from-invoice" | null>(null)
   const [template, setTemplate] = useState("standard")
   const [receiptNumber, setReceiptNumber] = useState(generateReceiptNumber())
@@ -38,6 +36,7 @@ export default function ReceiptBuilder({ onBack }: ReceiptBuilderProps) {
   })
   const [additionalNotes, setAdditionalNotes] = useState("")
   const [invoiceReference, setInvoiceReference] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Load data from localStorage
@@ -134,6 +133,10 @@ export default function ReceiptBuilder({ onBack }: ReceiptBuilderProps) {
 
   const fontOptions = ["Arial", "Helvetica", "Times New Roman", "Courier New"]
   const fontSizeOptions = ["10", "12", "14", "16", "18"]
+
+  const onBack = () => {
+    navigate({to: "/dashboard"})
+  }
 
   // Initial mode selection
   if (receiptMode === null) {
