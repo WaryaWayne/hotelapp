@@ -44,7 +44,7 @@ export default function HotelManagementSystem() {
   const renderActiveModule = () => {
     switch (activeModule) {
       case "invoice":
-        return <InvoiceGenerator onBack={() => setActiveModule("dashboard")} />
+        return <InvoiceGenerator onClose={() => setActiveModule("dashboard")} />
       case "quotation":
         return <QuotationCreator onBack={() => setActiveModule("dashboard")} />
       case "receipt":
