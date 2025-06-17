@@ -48,14 +48,14 @@ export default function HotelManagementSystem() {
       <div className="max-w-7xl mx-auto">
 
         {/* Floating Calculator */}
-        {showCalculator && <FloatingCalculator onClose={() => setShowCalculator(false)} />}
-
+{/*         {showCalculator && <FloatingCalculator onClose={() => setShowCalculator(false)} />}
+ */}
         {/* Recent Documents Modal */}
-        {showRecentDocuments && <RecentDocuments onClose={() => setShowRecentDocuments(false)} />}
-
+{/*         {showRecentDocuments && <RecentDocuments onClose={() => setShowRecentDocuments(false)} />}
+ */}
         {/* Settings Modal */}
-        {showSettings && <SettingsPanel onClose={() => navigate('/settings')} />}
-
+{/*         {showSettings && <SettingsPanel onClose={() => navigate('/settings')} />}
+ */}
           <div className="space-y-6">
             <div className="text-center space-y-4">
               <h1 className="text-4xl font-bold text-gray-900">Hotel Management System</h1>

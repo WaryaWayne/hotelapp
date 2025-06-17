@@ -1,29 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/dashboard')({
   component: HotelManagementSystem,
 })
 
-function RouteComponent() {
-  return <div>Hello "/dashboard"!</div>
-}
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FileText, Receipt, Calculator, Settings, History } from "lucide-react"
-import FloatingCalculator from "@/components/ui/custom/FloatingCalculator"
-import InvoiceGenerator from "@/components/ui/custom/InvoiceGenerator"
-import QuotationCreator from "@/components/ui/custom/quotation-creator"
-import ReceiptBuilder from "@/components/ui/custom/receipt-builder"
-import RecentDocuments from "@/components/ui/custom/recent-documents"
-import SettingsPanel from "@/components/ui/custom/settings-panel"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Calculator, FileText, History, Receipt, Settings } from "lucide-react"
+import { useState } from "react"
 
 export default function HotelManagementSystem() {
   const [activeModule, setActiveModule] = useState<string>("dashboard")
   const [showCalculator, setShowCalculator] = useState(false)
-  const [showRecentDocuments, setShowRecentDocuments] = useState(false)
-  const [showSettings, setShowSettings] = useState(false)
 
   const modules = [
     {
@@ -32,7 +21,7 @@ export default function HotelManagementSystem() {
       description: "Create professional invoices for your hotel services",
       icon: FileText,
       color: "bg-blue-500",
-      route: "/invoice",
+      route: "/invoice"
     },
     {
       id: "quotation",
@@ -40,7 +29,7 @@ export default function HotelManagementSystem() {
       description: "Generate detailed quotations for potential clients",
       icon: Receipt,
       color: "bg-green-500",
-      route: "/quote",
+      route: "/quote"
     },
     {
       id: "receipt",
@@ -48,20 +37,21 @@ export default function HotelManagementSystem() {
       description: "Create receipts for completed transactions",
       icon: Receipt,
       color: "bg-purple-500",
-      route: "/receipt",
+      route: "/receipt"
     },
   ]
 
-  const renderActiveModule = () => {
-    switch (activeModule) {
-      case "invoice":
-        return <InvoiceGenerator onClose={() => setActiveModule("dashboard")} />
-      case "quotation":
-        return <QuotationCreator onBack={() => setActiveModule("dashboard")} />
-      case "receipt":
-        return <ReceiptBuilder onBack={() => setActiveModule("dashboard")} />
-      default:
-        return (
+  const navigate = useNavigate()
+
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-4">
+      <div className="max-w-7xl mx-auto">
+
+        {/* Floating Calculator */}
+{/*         {showCalculator && <FloatingCalculator onClose={() => setShowCalculator(false)} />}
+ */}
+
           <div className="space-y-6">
             <div className="text-center space-y-4">
               <h1 className="text-4xl font-bold text-gray-900">Hotel Management System</h1>
@@ -77,7 +67,8 @@ export default function HotelManagementSystem() {
                   <Card
                     key={module.id}
                     className="hover:shadow-lg transition-shadow cursor-pointer"
-                    onClick={() => setActiveModule(module.id)}
+                    onClick={() => navigate({ to: `/${module.route}`})}
+                      
                   >
                     <CardHeader className="text-center">
                       <div
@@ -106,42 +97,25 @@ export default function HotelManagementSystem() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex gap-4">
-                <Button variant="outline" onClick={() => setShowCalculator(true)} className="flex items-center gap-2">
+                <Button variant="outline" onClick={() => showCalculator} className="flex items-center gap-2">
                   <Calculator className="w-4 h-4" />
                   Open Calculator
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => setShowRecentDocuments(true)}
+                  onClick={() => navigate({ to: '/recent-documents' })}
                   className="flex items-center gap-2"
                 >
                   <History className="w-4 h-4" />
                   View Recent Documents
                 </Button>
-                <Button variant="outline" onClick={() => setShowSettings(true)} className="flex items-center gap-2">
+                <Button variant="outline" onClick={() => navigate({to: "/settings"})} className="flex items-center gap-2">
                   <Settings className="w-4 h-4" />
                   Settings
                 </Button>
               </CardContent>
             </Card>
           </div>
-        )
-    }
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto">
-        {renderActiveModule()}
-
-        {/* Floating Calculator */}
-        {showCalculator && <FloatingCalculator onClose={() => setShowCalculator(false)} />}
-
-        {/* Recent Documents Modal */}
-        {showRecentDocuments && <RecentDocuments onClose={() => setShowRecentDocuments(false)} />}
-
-        {/* Settings Modal */}
-        {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
 
         {/* Global Calculator Button */}
         {activeModule !== "dashboard" && (
